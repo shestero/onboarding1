@@ -87,7 +87,7 @@ RUN echo '<?php echo phpinfo(); ?>' > /var/www/html/public/pi.php
 WORKDIR /var/www
 
 RUN composer create-project laravel/laravel Laravel && cd Laravel
-# php artisan migrate # [ßyes]
+# php artisan migrate # [yes]
 # php artisan serve --host=0.0.0.0
 
 # starting services
