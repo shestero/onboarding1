@@ -1,0 +1,39 @@
+version: '2'
+services:
+  maildev:
+    image: maildev/maildev
+    ports:
+      - "8025:1080"
+  app:
+    build:
+      args:
+        user: sammy
+        uid: 1000
+      context: ./
+      dockerfile: Dockerfile    
+    ports:
+      - "8008:80"
+      - "8000:8000"
+      - "9000:9000"
+    volumes:
+      - ./Laravel:/var/www/Laravel  
+    depends_on:
+      - maildev
+  
+  minio-client:  # service not necessary, used here to explain how to interact from the container with Minio
+    image: minio/mc
+    depends_on:
+      - app
+    environment:
+      MINIO_ACCESS_KEY: minioadmin 
+      MINIO_SECRET_KEY: minioadmin
+    entrypoint: >
+      /bin/sh -c "
+      until (/usr/bin/mc config host add myminio http://app:9000 minioadmin minioadmin) do echo '...waiting...' && sleep 3ß; done;
+      /usr/bin/mc mb myminio/test-bucket;
+      echo 'my content' > myfile.txt;
+      /usr/bin/mc cp myfile.txt myminio/test-bucket;
+      echo 'copied';
+      sleep 9999;
+      "
+    # /usr/bin/mc config host add myminio http://app:9000 ${MINIO_ACCESS_KEY} ${MINIO_SECRET_KEY};
