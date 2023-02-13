@@ -1,0 +1,52 @@
+<?php return array(
+    'root' => array(
+        'name' => 'systemsdk/docker-apache-php-laravel-tools',
+        'pretty_version' => '1.0.0+no-version-set',
+        'version' => '1.0.0.0',
+        'reference' => NULL,
+        'type' => 'library',
+        'install_path' => __DIR__ . '/../../',
+        'aliases' => array(),
+        'dev' => true,
+    ),
+    'versions' => array(
+        'phpstan/phpstan' => array(
+            'pretty_version' => '1.9.17',
+            'version' => '1.9.17.0',
+            'reference' => '204e459e7822f2c586463029f5ecec31bb45a1f2',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../phpstan/phpstan',
+            'aliases' => array(),
+            'dev_requirement' => true,
+        ),
+        'rector/rector' => array(
+            'pretty_version' => '0.15.13',
+            'version' => '0.15.13.0',
+            'reference' => '05df336f8e29873ed14c0790fbea68fa5de14f50',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../rector/rector',
+            'aliases' => array(),
+            'dev_requirement' => true,
+        ),
+        'roave/security-advisories' => array(
+            'pretty_version' => 'dev-latest',
+            'version' => 'dev-latest',
+            'reference' => 'c0e29643df152bd7fbe3de189f6c2c16c7d4c2a2',
+            'type' => 'metapackage',
+            'install_path' => NULL,
+            'aliases' => array(
+                0 => '9999999-dev',
+            ),
+            'dev_requirement' => true,
+        ),
+        'systemsdk/docker-apache-php-laravel-tools' => array(
+            'pretty_version' => '1.0.0+no-version-set',
+            'version' => '1.0.0.0',
+            'reference' => NULL,
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../../',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+    ),
+);

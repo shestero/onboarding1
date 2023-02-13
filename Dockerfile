@@ -62,9 +62,10 @@ ENV AWS_ACCESS_KEY_ID=minioadmin
 ENV AWS_SECRET_ACCESS_KEY=minioadmin
 ENV AWS_DEFAULT_REGION=eu-west-1
 ENV AWS_BUCKET=avatars
-ENV AWS_URL=https://127.0.0.1:9000
-ENV AWS_ENDPOINT=https://127.0.0.1:9000
-ENV AWS_USE_PATH_STYLE_ENDPOINT=true
+ENV AWS_URL=http://127.0.0.1:9000
+ENV AWS_ENDPOINT=http://127.0.0.1:9000
+ENV AWS_USE_PATH_STYLE_ENDPOINT=false
+# true
 
 # Install PHP extensions
 RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
@@ -86,12 +87,12 @@ RUN echo '<?php echo phpinfo(); ?>' > /var/www/html/public/pi.php
 # Set working directory
 WORKDIR /var/www
 
-RUN composer create-project laravel/laravel Laravel && cd Laravel
+RUN composer create-project laravel/laravel Laravel && cd Laravel && php artisan migrate --force
 # php artisan migrate # [yes]
 # php artisan serve --host=0.0.0.0
 
 # starting services
-ENTRYPOINT /bin/sh -c "systemctl start mariadb.service redis.service minio.service && tail -F /var/log/apache2/error.log"
+ENTRYPOINT /bin/sh -c "systemctl start apache2.service mariadb.service redis.service minio.service && tail -F /var/log/apache2/error.log"
 
 #USER $user
 
