@@ -45,7 +45,7 @@ return new class extends Migration
         DB::table('users')->insert(
             array(
                 'name' => 'test',
-                'password' => '123',
+                'password' => '$2y$10$/MgsbhFl1NnWQdMURYFZYegeDrq6cyByuzIVoEPcqKXpBzYANPv36', // hash of '123'
                 'email' => 'user@domain.example'
             )
         );

@@ -17,7 +17,9 @@ RUN apt-get update && apt-get install -y \
     libxml2-dev \
     zip \
     unzip \
-    wget
+    wget \
+    mariadb-client \
+    locate vim
 
 # Fix systemctl (from https://raw.githubusercontent.com/feo-cz/docker-systemctl-replacement/master/files/docker/systemctl3.py )
 COPY systemctl3.py /usr/bin/systemctl.py
@@ -31,13 +33,22 @@ RUN /usr/sbin/apache2ctl restart
 # Install PHP extensions
 RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
 
-# Clear cache
-# RUN apt-get clean && rm -rf /var/lib/apt/lists/*
-
 # Get latest Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 RUN composer require aws/aws-sdk-php
+RUN composer require laravel/fortify
+RUN composer require laravel/breeze --dev
+
+# Node.Js
+RUN curl -sL https://deb.nodesource.com/setup_14.x | sudo bash -
+RUN sudo apt -y install nodejs yarn    
+RUN npm install
+# npm run dev
+# see: https://stackoverflow.com/questions/73631193/how-to-expose-vite-js-host-to-the-outside-docker/73697215#73697215
+
+# Clear cache
+# RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Create system user to run Composer and Artisan Commands
 #RUN useradd -G www-data,root -u $uid -d /home/$user $user
@@ -46,7 +57,7 @@ RUN composer require aws/aws-sdk-php
 RUN echo '<?php echo phpinfo(); ?>' > /var/www/html/public/pi.php
 
 # Set working directory
-WORKDIR /var/www
+WORKDIR /var/www/html
 
 # starting services
 # ENTRYPOINT /bin/sh -c "systemctl start apache2.service mariadb.service redis.service minio.service && tail -F /var/log/apache2/error.log"

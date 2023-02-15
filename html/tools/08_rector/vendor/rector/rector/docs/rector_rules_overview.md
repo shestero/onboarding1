@@ -1,4 +1,4 @@
-# 415 Rules Overview
+# 413 Rules Overview
 
 <br>
 
@@ -6,7 +6,7 @@
 
 - [Arguments](#arguments) (5)
 
-- [CodeQuality](#codequality) (79)
+- [CodeQuality](#codequality) (78)
 
 - [CodingStyle](#codingstyle) (39)
 
@@ -34,7 +34,7 @@
 
 - [Php56](#php56) (2)
 
-- [Php70](#php70) (19)
+- [Php70](#php70) (18)
 
 - [Php71](#php71) (9)
 
@@ -647,29 +647,6 @@ return static function (RectorConfig $rectorConfig): void {
 +        $bar = self::BAR;
      }
  }
-```
-
-<br>
-
-### DoWhileBreakFalseToIfElseRector
-
-Replace do (...} while (false); with more readable if/else conditions
-
-- class: [`Rector\CodeQuality\Rector\Do_\DoWhileBreakFalseToIfElseRector`](../rules/CodeQuality/Rector/Do_/DoWhileBreakFalseToIfElseRector.php)
-
-```diff
--do {
--    if (mt_rand(0, 1)) {
--        $value = 5;
--        break;
--    }
--
-+if (mt_rand(0, 1)) {
-+    $value = 5;
-+} else {
-     $value = 10;
--} while (false);
-+}
 ```
 
 <br>
@@ -4913,19 +4890,6 @@ Changes multiple `dirname()` calls to one with nesting level
 ```diff
 -dirname(dirname($path));
 +dirname($path, 2);
-```
-
-<br>
-
-### NonVariableToVariableOnFunctionCallRector
-
-Transform non variable like arguments to variable where a function or method expects an argument passed by reference
-
-- class: [`Rector\Php70\Rector\FuncCall\NonVariableToVariableOnFunctionCallRector`](../rules/Php70/Rector/FuncCall/NonVariableToVariableOnFunctionCallRector.php)
-
-```diff
--reset(a());
-+$a = a(); reset($a);
 ```
 
 <br>

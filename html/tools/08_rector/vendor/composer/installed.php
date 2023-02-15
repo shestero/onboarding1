@@ -20,9 +20,9 @@
             'dev_requirement' => true,
         ),
         'rector/rector' => array(
-            'pretty_version' => '0.15.13',
-            'version' => '0.15.13.0',
-            'reference' => '05df336f8e29873ed14c0790fbea68fa5de14f50',
+            'pretty_version' => '0.15.16',
+            'version' => '0.15.16.0',
+            'reference' => '826539a991aa22590e91f8add06ca99f76e21ccd',
             'type' => 'library',
             'install_path' => __DIR__ . '/../rector/rector',
             'aliases' => array(),
@@ -31,7 +31,7 @@
         'roave/security-advisories' => array(
             'pretty_version' => 'dev-latest',
             'version' => 'dev-latest',
-            'reference' => 'c0e29643df152bd7fbe3de189f6c2c16c7d4c2a2',
+            'reference' => 'bc35b8e9853346249e3adec090d33c6041fb2df4',
             'type' => 'metapackage',
             'install_path' => NULL,
             'aliases' => array(
