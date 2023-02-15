@@ -23,6 +23,13 @@ class Users_view extends Eloquent {
     }
 }
 
+Route::get('login', function()
+{
+    return 'Login page.';
+});
+
+
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -58,5 +65,5 @@ Route::get('avatar/{id}', function($id)
       ]);
 });
 
-Route::get('image-upload', [ ImageUploadController::class, 'imageUpload' ])->name('image.upload');
-Route::post('image-upload', [ ImageUploadController::class, 'imageUploadPost' ])->name('image.upload.post');
+Route::get('avatar-upload', [ ImageUploadController::class, 'avatarUpload' ])->name('avatar-upload');
+Route::post('avatar-upload', [ ImageUploadController::class, 'avatarUploadPost' ])->name('avatar.upload.post');

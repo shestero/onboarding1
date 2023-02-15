@@ -1,7 +1,9 @@
 <?php
   
 namespace App\Http\Controllers;
-  
+
+use DB;
+use Storage;
 use Illuminate\Http\Request;
   
 class ImageUploadController extends Controller
@@ -11,9 +13,15 @@ class ImageUploadController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function imageUpload()
+    public function avatarUpload(Request $request)
     {
-        return view('imageUpload');
+        $request->validate([
+            'userid' => 'required|integer'
+        ]);
+    
+        $userid = $request->userid;
+
+        return view('imageUpload')->with('userid', $userid);
     }
     
     /**
@@ -21,21 +29,35 @@ class ImageUploadController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function imageUploadPost(Request $request)
+    public function avatarUploadPost(Request $request)
     {
         $request->validate([
+            'userid' => 'required|integer',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:20480',
         ]);
     
-        $imageName = time().'.'.$request->image->extension();  
+        $userid = $request->userid;
+
+        if (!$request->hasFile('image')) 
+            return back()->with('error', 'No image');
+
+        $imageName = $userid.'.'.$request->image->extension();
      
-        $path = Storage::disk('s3')->put('avatars', $request->image);
-        $path = Storage::disk('s3')->url($path);
-  
-        /* Store $imageName name in DATABASE from HERE */
-    
+        //$path = $request->file('image')->storePubliclyAs( 'avatars', $imageName, 's3' );
+        $res = Storage::disk('s3')->put($imageName, $request->image->get());
+        if (!$res)
+            return back()->with('error', 'No image');
+
+        //$path = Storage::disk('s3')->url($imageName);
+        $url = env('AWS_EXTERNAL_URL', env('AWS_URL'));
+        $path = "$url/avatars/$imageName";
+
+        DB::table('users')
+                ->where('id', $userid)
+                ->update(['avatar' =>$imageName]);
+
         return back()
-            ->with('success','You have successfully upload image.')
+            ->with('success',"You have successfully upload image $imageName.  $path ")
             ->with('image', $path); 
     }
 } 

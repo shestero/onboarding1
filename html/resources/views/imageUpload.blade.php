@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>laravel File Uploading with Amazon S3 - ItSolutionStuff.com.com</title>
+    <title>Avatar uploader</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 </head>
     
@@ -9,7 +9,7 @@
 <div class="container">
      
     <div class="panel panel-primary">
-      <div class="panel-heading"><h2>laravel File Uploading with Amazon S3 - ItSolutionStuff.com.com</h2></div>
+      <div class="panel-heading"><h2>Avatar file Uploading with Amazon S3</h2></div>
       <div class="panel-body">
      
         @if ($message = Session::get('success'))
@@ -31,8 +31,9 @@
             </div>
         @endif
     
-        <form action="{{ route('image.upload.post') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('avatar.upload.post') }}" method="POST" enctype="multipart/form-data">
             @csrf
+            <input type="hidden" name="userid" value="{{ $userid }}">
             <div class="row">
     
                 <div class="col-md-6">
@@ -49,6 +50,8 @@
       </div>
     </div>
 </div>
+<br/>
+<a href="{{ url('user', $userid) }}">&lt;&lt; Back to user profile view</a>
 </body>
   
 </html>

@@ -63,19 +63,20 @@ services:
     volumes:
       - ./html:/var/www/html
     environment:
-      - AWS_ACCESS_KEY_ID=minioadmin
-      - AWS_SECRET_ACCESS_KEY=minioadmin
+      - AWS_ACCESS_KEY_ID=minio
+      - AWS_SECRET_ACCESS_KEY=minio123
       - AWS_DEFAULT_REGION=eu-west-1
       - AWS_BUCKET=avatars
-      - AWS_URL=http://127.0.0.1:9000
-      - AWS_ENDPOINT=http://127.0.0.1:9000
-      - AWS_USE_PATH_STYLE_ENDPOINT=false
+      - AWS_EXTERNAL_URL=http://localhost:9000
+      - AWS_URL=http://minio:9000
+      - AWS_ENDPOINT=http://minio:9000
+      - AWS_USE_PATH_STYLE_ENDPOINT=true
       - MINIO_VOLUMES=/minio-data
       - MINIO_ACCESS_KEY=minio
       - MINIO_SECRET_KEY=minio123
       - MINIO_SERVER_ACCESS_KEY=minio
       - MINIO_SERVER_SECRET_KEY=minio123
-      - MINIO_ROOT_USER=minioa
+      - MINIO_ROOT_USER=minio
       - MINIO_ROOT_PASSWORD=minio123
       - REDIS_URL=redis://redis:6379
       - REDIS_HOST=redis

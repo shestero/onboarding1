@@ -5,7 +5,14 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
-
+use Eloquent;
+use View;
+class Users_view extends Eloquent {
+    function __construct()
+    {
+        $this->setTable('users_view');
+    }
+}
 class UserController extends Controller
 {
     /**
@@ -15,7 +22,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $users = Users_view::all();
+        return response()->json( [ "users" => $users ] );
     }
 
     /**
@@ -47,7 +55,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        //
+        return "users: show user=$user";
     }
 
     /**
@@ -58,7 +66,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        return "users: edit user=$user";
     }
 
     /**
@@ -70,7 +78,7 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
-        //
+        return "users: update user=$user";  
     }
 
     /**

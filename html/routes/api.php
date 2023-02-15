@@ -25,4 +25,9 @@ Route::get('about', function()
     return 'About page.';
 });
 
+Route::get('login', function()
+{
+    return 'login page.';
+});
+
 Route::resource('users', UserController::class);
