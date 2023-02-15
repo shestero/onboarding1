@@ -6,7 +6,8 @@ require_once 'singularize.php'
 
 @section('content')
     <h3>Users with roles</h3>
+    <br/>
     @foreach($users as $user)
-        <p>{{ $user->id }} <a href="{{ url('user',$user->id) }}">{{ $user->name }}</a> <i>{{ singularize($user->group_name) }}</i></p>
+        <p>{{ $user->id }} <a href="{{ url('user',$user->id) }}" style="font: bold">{{ $user->name }}</a> ({{ singularize($user->group_name) }})</i></p>
     @endforeach
 @stop

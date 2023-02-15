@@ -9,7 +9,7 @@
 <div class="container">
      
     <div class="panel panel-primary">
-      <div class="panel-heading"><h2>Avatar file Uploading with Amazon S3</h2></div>
+      <div class="panel-heading"><h2>Upload avatar for user with id={{ $userid }}</h2></div>
       <div class="panel-body">
      
         @if ($message = Session::get('success'))
@@ -49,9 +49,9 @@
     
       </div>
     </div>
+    <hr/>
+    <a href="{{ url('user', $userid) }}">&lt;&lt; Back to user profile view</a>
 </div>
-<br/>
-<a href="{{ url('user', $userid) }}">&lt;&lt; Back to user profile view</a>
 </body>
   
 </html>

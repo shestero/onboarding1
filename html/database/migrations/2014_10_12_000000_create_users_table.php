@@ -37,6 +37,13 @@ return new class extends Migration
         );
         DB::table('users')->insert(
             array(
+                'name' => 'Ivan Ivanović',
+                'password' => '123',
+                'email' => 'ivanovich@domain.example'
+            )
+        );
+        DB::table('users')->insert(
+            array(
                 'name' => 'test',
                 'password' => '123',
                 'email' => 'user@domain.example'
