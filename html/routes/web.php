@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ImageUploadController;
-    use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 /*
 |--------------------------------------------------------------------------
@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Storage;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('dashboard'); // return view('welcome');
 });
 
 Route::get('/dashboard', function () {
@@ -29,17 +29,19 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-//use app\Models\User;
+use app\Models\User as Users_view;
+/*
 class Users_view extends Eloquent {
     function __construct()
     {
         $this->setTable('users_view');
     }
 }
+*/
 
 Route::get('about', function()
 {
-    return 'About!';
+    return 'About page!';
 })->name('about');
 
 Route::get('users', function()
@@ -55,12 +57,12 @@ Route::get('user/{id}', function($id)
     return View::make('user')->with('id', $id)->with('user', $user);
 })->where('id', '[0-9]+')->middleware(['auth', 'verified']);
 
-Route::get('user', function() 
+Route::middleware(['auth', 'verified'])->get('user', function() 
 {
     $id = Auth::user()->id;
     $user = Users_view::firstWhere("id", $id);
     return View::make('user')->with('id', $id)->with('user', $user);
-})->where('id', '[0-9]+')->middleware(['auth', 'verified'])->name('user');
+})->name('user');
 
 Route::get('avatar/{id}', function($id)
 {
@@ -74,6 +76,16 @@ Route::get('avatar/{id}', function($id)
         'Content-Type' => $mimetype
       ]);
 })->where('id', '[0-9]+');
+
+Route::get('promote/{userid}', function($userid)
+{
+    $res = DB::table('users')
+        ->where('id', $userid)
+        ->update(['group_id' => 1]);
+
+    return var_export($res, true);
+
+})->where('userid', '[0-9]+')->middleware('admin');
 
 Route::get('avatar-upload', [ ImageUploadController::class, 'avatarUpload' ])->
     middleware(['auth', 'verified'])->name('avatar-upload');

@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\UserController;
 
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -22,12 +23,17 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('about', function()
 {
-    return 'About page.';
+    return 'TODO: about json.';
 });
 
-Route::get('login', function()
+Route::get('promote/{userid}', function($userid)
 {
-    return 'login page.';
-});
+    $res = DB::table('users')
+        ->where('id', $userid)
+        ->update(['group_id' => 1]);
+
+    return var_export($res, true);
+
+})->where('userid', '[0-9]+')->middleware('admin');
 
 Route::resource('users', UserController::class);
