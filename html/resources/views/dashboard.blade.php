@@ -14,4 +14,18 @@
             </div>
         </div>
     </div>
+
+    <div xclass="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div>
+                <h4>Pages:</h4>
+                <ul style="list-style: disc;">
+                    <li><a href="{{ url('profile') }}">Your profile</a></li>
+                    <li><a href="{{ url('user', Auth::user()->id) }}">Your user page</a></li>
+                    <li><a href="{{ url('users') }}">List of users (+promote)</a></li>
+                </ul>    
+            </div>
+        </div>
+    </div>
+
 </x-app-layout>

@@ -40,20 +40,27 @@ class Users_view extends Eloquent {
 Route::get('about', function()
 {
     return 'About!';
-});
+})->name('about');
 
 Route::get('users', function()
 {
     $users = Users_view::all();
     return View::make('users')->with('users', $users);
     //return View::make('users');        
-});
+})->middleware(['auth', 'verified'])->name('users');;
 
 Route::get('user/{id}', function($id) 
 {
     $user = Users_view::firstWhere("id", $id);
     return View::make('user')->with('id', $id)->with('user', $user);
-});
+})->where('id', '[0-9]+')->middleware(['auth', 'verified']);
+
+Route::get('user', function() 
+{
+    $id = Auth::user()->id;
+    $user = Users_view::firstWhere("id", $id);
+    return View::make('user')->with('id', $id)->with('user', $user);
+})->where('id', '[0-9]+')->middleware(['auth', 'verified'])->name('user');
 
 Route::get('avatar/{id}', function($id)
 {
@@ -66,9 +73,11 @@ Route::get('avatar/{id}', function($id)
     return response($image)->withHeaders([
         'Content-Type' => $mimetype
       ]);
-});
+})->where('id', '[0-9]+');
 
-Route::get('avatar-upload', [ ImageUploadController::class, 'avatarUpload' ])->name('avatar-upload');
-Route::post('avatar-upload', [ ImageUploadController::class, 'avatarUploadPost' ])->name('avatar.upload.post');
+Route::get('avatar-upload', [ ImageUploadController::class, 'avatarUpload' ])->
+    middleware(['auth', 'verified'])->name('avatar-upload');
+Route::post('avatar-upload', [ ImageUploadController::class, 'avatarUploadPost' ])->
+    middleware(['auth', 'verified'])->name('avatar.upload.post');
 
 require __DIR__.'/auth.php';

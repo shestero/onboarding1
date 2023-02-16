@@ -28,7 +28,7 @@ return new class extends Migration
         DB::table('users')->insert(
             array(
                 'name' => 'root',
-                'password' => 'god',
+                'password' => '$2y$10$x4ttMR3sdKEWyyaTomSLGuugKWIA1ex/Lf9GGQdcAXkG11F7zjc3m', // has of 'qwertyuiop123' (bcrypt)
                 'group_id' => 1,
                 'avatar' => 'agent-k-512.png',
                 'email' => 'root@domain.example',
@@ -38,7 +38,7 @@ return new class extends Migration
         DB::table('users')->insert(
             array(
                 'name' => 'Ivan Ivanović',
-                'password' => '123',
+                'password' => '$2y$10$x4ttMR3sdKEWyyaTomSLGuugKWIA1ex/Lf9GGQdcAXkG11F7zjc3m', // has of 'qwertyuiop123'
                 'email' => 'ivanovich@domain.example'
             )
         );

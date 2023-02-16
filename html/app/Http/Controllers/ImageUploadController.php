@@ -2,6 +2,7 @@
   
 namespace App\Http\Controllers;
 
+use Auth;
 use DB;
 use Storage;
 use Illuminate\Http\Request;
@@ -16,10 +17,10 @@ class ImageUploadController extends Controller
     public function avatarUpload(Request $request)
     {
         $request->validate([
-            'userid' => 'required|integer'
+            //'userid' => 'required|integer'
         ]);
     
-        $userid = $request->userid;
+        $userid = Auth::user()->id; // $request->userid;
 
         return view('imageUpload')->with('userid', $userid);
     }
@@ -32,11 +33,10 @@ class ImageUploadController extends Controller
     public function avatarUploadPost(Request $request)
     {
         $request->validate([
-            'userid' => 'required|integer',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:20480',
         ]);
     
-        $userid = $request->userid;
+        $userid = Auth::user()->id; // $request->userid;
 
         if (!$request->hasFile('image')) 
             return back()->with('error', 'No image');
