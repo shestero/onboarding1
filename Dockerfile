@@ -1,12 +1,8 @@
-FROM systemsdk/docker-apache-php-laravel
+FROM systemsdk/docker-apache-php-laravel AS base
 
-# see: https://magecomp.com/blog/laravel-8-create-application-programing-interface/#Step_1_Install_Laravel_8
+FROM base AS builder
 
-# Arguments defined in docker-compose.yml
-ARG user
-ARG uid
-
-RUN echo "Mutex posixsem" >> /etc/apache2/apache2.conf
+# RUN echo "Mutex posixsem" >> /etc/apache2/apache2.conf
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
@@ -22,8 +18,8 @@ RUN apt-get update && apt-get install -y \
     locate vim
 
 # Fix systemctl (from https://raw.githubusercontent.com/feo-cz/docker-systemctl-replacement/master/files/docker/systemctl3.py )
-COPY systemctl3.py /usr/bin/systemctl.py
-RUN chmod +x /usr/bin/systemctl.py && cp -f /usr/bin/systemctl.py /usr/bin/systemctl
+#COPY systemctl3.py /usr/bin/systemctl.py
+#RUN chmod +x /usr/bin/systemctl.py && cp -f /usr/bin/systemctl.py /usr/bin/systemctl
 
 # install Redis PHP extension
 RUN echo ''|pecl install redis
@@ -50,17 +46,12 @@ RUN npm install
 # Clear cache
 # RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Create system user to run Composer and Artisan Commands
-#RUN useradd -G www-data,root -u $uid -d /home/$user $user
-#RUN mkdir -p /home/$user/.composer && chown -R $user:$user /home/$user
-
 RUN echo '<?php echo phpinfo(); ?>' > /var/www/html/public/pi.php
 
 # Set working directory
 WORKDIR /var/www/html
 
-# starting services
+# starting services (single container):
 # ENTRYPOINT /bin/sh -c "systemctl start apache2.service mariadb.service redis.service minio.service && tail -F /var/log/apache2/error.log"
 
-#USER $user
 

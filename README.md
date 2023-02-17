@@ -1,4 +1,36 @@
-##Task Description
+# Wiregate website backend (On-Boarding task #1)
+
+## Preparing
+
+## Development
+
+### Run for local development
+```
+docker-compose up --build
+```
+
+### Production image
+```
+TARGET=prod docker-compose up --build
+```
+
+### Database inititalization (migration)
+
+Connect to app container
+```
+docker exec -it onboarding1-app-1 bash
+```
+From the default directory /var/www/html run:
+```
+php artisan migrate
+```
+
+### Check emails locally
+```
+http://localhost:8025
+```
+
+## PS Task Description
 
 * Create a back-end application which will have User Entity: email / password, Role Entity: Administrator and User.
 * User needs to have the ability to register and reset his password via email.
@@ -16,7 +48,7 @@
 
 Front-end part is not important. Can be implemented without CSS on plain HTML.
 
-##Tech
+## Tech
 Following technologies must be used:
 
 * PHP Laravel;
@@ -25,7 +57,7 @@ Following technologies must be used:
 * Docker;
 * Redis.
 
-##Hints:
+## Hints:
 
 	maildev:
 	  image: maildev/maildev
