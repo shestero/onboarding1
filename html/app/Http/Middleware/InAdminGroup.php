@@ -25,10 +25,11 @@ class InAdminGroup //extends Middleware
         if ($user && $user->isAdmin()) {
             return $next($request);
         }
-   
-        $uinfo = "<<unknown>>";
-        if ($user)
+
+        $uinfo = '<<unknown>>';
+        if ($user) {
             $uinfo = "$user->id $user->name";
+        }
 
         return abort(403, "Access denied for user $uinfo"); //redirect('/');
     }

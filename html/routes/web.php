@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ImageUploadController;
+use App\Http\Controllers\ProfileController;
+use app\Models\User as Users_view;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Storage;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -29,7 +30,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-use app\Models\User as Users_view;
+use Illuminate\Support\Facades\Storage;
+
 /*
 class Users_view extends Eloquent {
     function __construct()
@@ -39,49 +41,44 @@ class Users_view extends Eloquent {
 }
 */
 
-Route::get('about', function()
-{
+Route::get('about', function () {
     return view('about');
 })->name('about');
 
-Route::get('users', function()
-{
+Route::get('users', function () {
     $users = Users_view::all();
-    return View::make('users')->with('users', $users);
-})->middleware(['auth', 'verified'])->name('users');;
 
-Route::get('user/{id}', function($id) 
-{
-    $user = Users_view::firstWhere("id", $id);
+    return View::make('users')->with('users', $users);
+})->middleware(['auth', 'verified'])->name('users');
+
+Route::get('user/{id}', function ($id) {
+    $user = Users_view::firstWhere('id', $id);
+
     return View::make('user')->with('id', $id)->with('user', $user);
 })->where('id', '[0-9]+')->middleware(['auth', 'verified']);
 
-Route::middleware(['auth', 'verified'])->get('user', function() 
-{
+Route::middleware(['auth', 'verified'])->get('user', function () {
     $id = Auth::user()->id;
-    $user = Users_view::firstWhere("id", $id);
+    $user = Users_view::firstWhere('id', $id);
+
     return View::make('user')->with('id', $id)->with('user', $user);
 })->name('user');
 
-Route::get('promote/{userid}', function($userid)
-{
+Route::get('promote/{userid}', function ($userid) {
     $res = DB::table('users')->where('id', $userid)->update(['group_id' => 1]);
 
     return var_export($res, true);
-
 })->where('userid', '[0-9]+')->middleware('admin');
 
-Route::get('user.delete/{userid}', function($userid) 
-{
+Route::get('user.delete/{userid}', function ($userid) {
     $res = DB::table('users')->where('id', $userid)->delete();
 
     return var_export($res, true);
-
 })->where('userid', '[0-9]+')->middleware('admin');
 
-Route::get('avatar-upload', [ ImageUploadController::class, 'avatarUpload' ])->
+Route::get('avatar-upload', [ImageUploadController::class, 'avatarUpload'])->
     middleware(['auth', 'verified'])->name('avatar-upload');
-Route::post('avatar-upload', [ ImageUploadController::class, 'avatarUploadPost' ])->
+Route::post('avatar-upload', [ImageUploadController::class, 'avatarUploadPost'])->
     middleware(['auth', 'verified'])->name('avatar.upload.post');
 
 require __DIR__.'/auth.php';

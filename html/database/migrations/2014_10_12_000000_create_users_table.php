@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      *
@@ -26,28 +25,28 @@ return new class extends Migration
         });
 
         DB::table('users')->insert(
-            array(
+            [
                 'name' => 'root',
                 'password' => '$2y$10$x4ttMR3sdKEWyyaTomSLGuugKWIA1ex/Lf9GGQdcAXkG11F7zjc3m', // has of 'qwertyuiop123' (bcrypt)
                 'group_id' => 1,
                 'avatar' => 'agent-k-512.png',
                 'email' => 'root@domain.example',
-                'email_verified_at' => '2023-01-01'
-            )
+                'email_verified_at' => '2023-01-01',
+            ]
         );
         DB::table('users')->insert(
-            array(
+            [
                 'name' => 'Ivan Ivanović',
                 'password' => '$2y$10$x4ttMR3sdKEWyyaTomSLGuugKWIA1ex/Lf9GGQdcAXkG11F7zjc3m', // has of 'qwertyuiop123'
-                'email' => 'ivanovich@domain.example'
-            )
+                'email' => 'ivanovich@domain.example',
+            ]
         );
         DB::table('users')->insert(
-            array(
+            [
                 'name' => 'test',
                 'password' => '$2y$10$/MgsbhFl1NnWQdMURYFZYegeDrq6cyByuzIVoEPcqKXpBzYANPv36', // hash of '123'
-                'email' => 'user@domain.example'
-            )
+                'email' => 'user@domain.example',
+            ]
         );
     }
 

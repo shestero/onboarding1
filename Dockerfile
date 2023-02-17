@@ -35,6 +35,9 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 RUN composer require aws/aws-sdk-php
 RUN composer require laravel/fortify
 RUN composer require laravel/breeze --dev
+RUN composer global require friendsofphp/php-cs-fixer
+#RUN composer require stechstudio/laravel-php-cs-fixer 
+# Error: Class "ECSPrefix202302\Symfony\Component\Console\Command\Command" not found
 
 # Node.Js
 RUN curl -sL https://deb.nodesource.com/setup_14.x | sudo bash -

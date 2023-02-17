@@ -1,15 +1,15 @@
 <?php
-  
+
 namespace App\Http\Controllers;
 
 use Auth;
 use DB;
-use Storage;
 use Illuminate\Http\Request;
-  
+use Storage;
+
 class ImageUploadController extends Controller
 {
-     /**
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -19,12 +19,12 @@ class ImageUploadController extends Controller
         $request->validate([
             //'userid' => 'required|integer'
         ]);
-    
+
         $userid = Auth::user()->id; // $request->userid;
 
         return view('imageUpload')->with('userid', $userid);
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -35,18 +35,20 @@ class ImageUploadController extends Controller
         $request->validate([
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:20480',
         ]);
-    
+
         $userid = Auth::user()->id; // $request->userid;
 
-        if (!$request->hasFile('image')) 
+        if (! $request->hasFile('image')) {
             return back()->with('error', 'No image');
+        }
 
         $imageName = $userid.'.'.$request->image->extension();
-     
+
         //$path = $request->file('image')->storePubliclyAs( 'avatars', $imageName, 's3' );
         $res = Storage::disk('s3')->put($imageName, $request->image->get());
-        if (!$res)
+        if (! $res) {
             return back()->with('error', 'No image');
+        }
 
         //$path = Storage::disk('s3')->url($imageName);
         $url = env('AWS_EXTERNAL_URL', env('AWS_URL'));
@@ -57,8 +59,7 @@ class ImageUploadController extends Controller
                 ->update(['avatar' =>$imageName]);
 
         return back()
-            ->with('success',"You have successfully upload image $imageName.  $path ")
-            ->with('image', $path); 
+            ->with('success', "You have successfully upload image $imageName.  $path ")
+            ->with('image', $path);
     }
-} 
-?>
+}

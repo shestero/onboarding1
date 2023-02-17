@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      *
@@ -42,7 +41,7 @@ return new class extends Migration
                 LEFT JOIN groups ON users.group_id=groups.id
             SQL;
     }
-   
+
     /**
      * Reverse the migrations.
      *
@@ -53,5 +52,5 @@ return new class extends Migration
         return <<<'SQL'
             DROP VIEW IF EXISTS `users_view`;
             SQL;
-    }        
+    }
 };

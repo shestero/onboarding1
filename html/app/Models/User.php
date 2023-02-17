@@ -15,14 +15,14 @@ class User extends Authenticatable
     use HasFactory;
     use Notifiable;
 
-    function __construct()
+    public function __construct()
     {
         $this->setTable('users_view');
     }
 
     public function isAdmin()
     {
-        return $this->group_id===1;
+        return $this->group_id === 1;
     }
 
     /**

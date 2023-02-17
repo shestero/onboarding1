@@ -16,7 +16,7 @@ class Authenticate extends Middleware
      */
     protected function redirectTo($request)
     {
-        if (!$request->expectsJson()) {
+        if (! $request->expectsJson()) {
             return route('login');
         }
     }
@@ -28,7 +28,7 @@ class Authenticate extends Middleware
         if ($user && $user->isAdmin()) {
             return $next($request);
         }
-   
+
         return abort(403, "Access denied for user ${$user->id} ${$user->name}"); //redirect('/');
     }
     */

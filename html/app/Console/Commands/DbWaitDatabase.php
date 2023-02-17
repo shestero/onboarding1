@@ -41,7 +41,7 @@ class DbWaitDatabase extends Command
 
                 return 0;
             } catch (QueryException $exception) {
-                $this->comment('Trying to connect to the database seconds:' . $i);
+                $this->comment('Trying to connect to the database seconds:'.$i);
                 sleep(self::WAIT_SLEEP_TIME);
 
                 continue;

@@ -7,8 +7,10 @@ use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use Eloquent;
 use View;
-class Users_view extends Eloquent {
-    function __construct()
+
+class Users_view extends Eloquent
+{
+    public function __construct()
     {
         $this->setTable('users_view');
     }
@@ -23,7 +25,8 @@ class UserController extends Controller
     public function index()
     {
         $users = Users_view::all();
-        return response()->json( [ "users" => $users ] );
+
+        return response()->json(['users' => $users]);
     }
 
     /**
@@ -78,7 +81,7 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
-        return "users: update user=$user";  
+        return "users: update user=$user";
     }
 
     /**

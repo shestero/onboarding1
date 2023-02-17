@@ -34,7 +34,8 @@
 		"laravel/framework": "^9.48",
 		"laravel/sanctum": "^3.0",
 		"laravel/tinker": "^2.7",
-		"league/flysystem-aws-s3-v3": "^3.12"
+		"league/flysystem-aws-s3-v3": "^3.12",
+		"stechstudio/laravel-php-cs-fixer": "*"
 	},
 	"require-dev": {
 		"bamarni/composer-bin-plugin": "^1.8",

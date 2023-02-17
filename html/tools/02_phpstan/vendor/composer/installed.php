@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'systemsdk/docker-apache-php-laravel-tools',
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
-        'reference' => NULL,
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
+        'reference' => '4add6c72c05555b58eaf4e0ca572a2b9674c181a',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -380,9 +380,9 @@
             'dev_requirement' => true,
         ),
         'nunomaduro/larastan' => array(
-            'pretty_version' => '2.4.0',
-            'version' => '2.4.0.0',
-            'reference' => '14f631348ead3e245651606931863b4f218d1f78',
+            'pretty_version' => '2.4.1',
+            'version' => '2.4.1.0',
+            'reference' => '238fdbfba3aae133cdec73e99826c9b0232141f7',
             'type' => 'phpstan-extension',
             'install_path' => __DIR__ . '/../nunomaduro/larastan',
             'aliases' => array(),
@@ -416,9 +416,9 @@
             'dev_requirement' => true,
         ),
         'phpstan/phpstan' => array(
-            'pretty_version' => '1.9.17',
-            'version' => '1.9.17.0',
-            'reference' => '204e459e7822f2c586463029f5ecec31bb45a1f2',
+            'pretty_version' => '1.9.18',
+            'version' => '1.9.18.0',
+            'reference' => 'f2d5cf71be91172a57c649770b73c20ebcffb0bf',
             'type' => 'library',
             'install_path' => __DIR__ . '/../phpstan/phpstan',
             'aliases' => array(),
@@ -512,7 +512,7 @@
         'roave/security-advisories' => array(
             'pretty_version' => 'dev-latest',
             'version' => 'dev-latest',
-            'reference' => 'bc35b8e9853346249e3adec090d33c6041fb2df4',
+            'reference' => 'df155ba3057743b818f94889528787f145992478',
             'type' => 'metapackage',
             'install_path' => NULL,
             'aliases' => array(
@@ -776,9 +776,9 @@
             'dev_requirement' => true,
         ),
         'systemsdk/docker-apache-php-laravel-tools' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
-            'reference' => NULL,
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'reference' => '4add6c72c05555b58eaf4e0ca572a2b9674c181a',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

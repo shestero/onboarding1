@@ -30,6 +30,24 @@ php artisan migrate
 http://localhost:8025
 ```
 
+### Check/fix code style
+
+Connect to app container
+```
+docker exec -it onboarding1-app-1 bash
+```
+From the default directory /var/www/html run:
+ to check code style:
+```
+PHP_CS_FIXER_IGNORE_ENV=1 $HOME/.composer/vendor/bin/php-cs-fixer fix --dry-run --diff
+```
+ to fix code style:
+```
+PHP_CS_FIXER_IGNORE_ENV=1 $HOME/.composer/vendor/bin/php-cs-fixer fix
+```
+
+Note: config file used: https://gist.github.com/laravel-shift/cab527923ed2a109dda047b97d53c200
+
 ## PS Task Description
 
 * Create a back-end application which will have User Entity: email / password, Role Entity: Administrator and User.

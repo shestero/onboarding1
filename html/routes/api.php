@@ -1,10 +1,8 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
-use App\Http\Controllers\UserController;
-
 
 /*
 |--------------------------------------------------------------------------
@@ -21,19 +19,16 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('about', function()
-{
+Route::get('about', function () {
     return 'TODO: about json.';
 });
 
-Route::get('promote/{userid}', function($userid)
-{
+Route::get('promote/{userid}', function ($userid) {
     $res = DB::table('users')
         ->where('id', $userid)
         ->update(['group_id' => 1]);
 
     return var_export($res, true);
-
 })->where('userid', '[0-9]+')->middleware('admin');
 
 Route::resource('users', UserController::class);

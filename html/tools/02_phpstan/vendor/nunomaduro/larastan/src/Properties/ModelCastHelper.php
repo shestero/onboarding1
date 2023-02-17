@@ -32,9 +32,9 @@ class ModelCastHelper
 
     public function getReadableType(string $cast, Type $originalType): Type
     {
-        $castType = $this->parseCast($cast);
+        $cast = $this->parseCast($cast);
 
-        $attributeType = match ($castType) {
+        $attributeType = match ($cast) {
             'int', 'integer', 'timestamp' => new IntegerType(),
             'real', 'float', 'double' => new FloatType(),
             'decimal' => TypeCombinator::intersect(new StringType(), new AccessoryNumericStringType()),
@@ -45,8 +45,9 @@ class ModelCastHelper
             'collection' => new ObjectType('Illuminate\Support\Collection'),
             'date', 'datetime' => $this->getDateType(),
             'immutable_date', 'immutable_datetime' => new ObjectType('Carbon\CarbonImmutable'),
-            'Illuminate\Database\Eloquent\Casts\AsArrayObject' => new ObjectType('Illuminate\Database\Eloquent\Casts\ArrayObject'),
-            'Illuminate\Database\Eloquent\Casts\AsCollection' => new GenericObjectType('Illuminate\Support\Collection', [new BenevolentUnionType([new IntegerType(), new StringType()]), new MixedType()]),
+            'Illuminate\Database\Eloquent\Casts\AsArrayObject', 'Illuminate\Database\Eloquent\Casts\AsEncryptedArrayObject' => new ObjectType('Illuminate\Database\Eloquent\Casts\ArrayObject'),
+            'Illuminate\Database\Eloquent\Casts\AsCollection', 'Illuminate\Database\Eloquent\Casts\AsEncryptedCollection' => new GenericObjectType('Illuminate\Support\Collection', [new BenevolentUnionType([new IntegerType(), new StringType()]), new MixedType()]),
+            'Illuminate\Database\Eloquent\Casts\AsStringable' => new ObjectType('Illuminate\Support\Stringable'),
             default => null,
         };
 
@@ -59,6 +60,10 @@ class ModelCastHelper
         }
 
         $classReflection = $this->reflectionProvider->getClass($cast);
+
+        if ($classReflection->isEnum()) {
+            return new ObjectType($cast);
+        }
 
         if ($classReflection->isSubclassOf(Castable::class)) {
             $methodReflection = $classReflection->getNativeMethod('castUsing');
@@ -84,9 +89,9 @@ class ModelCastHelper
 
     public function getWriteableType(string $cast, Type $originalType): Type
     {
-        $castType = $this->parseCast($cast);
+        $cast = $this->parseCast($cast);
 
-        $attributeType = match ($castType) {
+        $attributeType = match ($cast) {
             'int', 'integer', 'timestamp' => new IntegerType(),
             'real', 'float', 'double' => new FloatType(),
             'decimal' => TypeCombinator::intersect(new StringType(), new AccessoryNumericStringType()),
@@ -97,7 +102,9 @@ class ModelCastHelper
             'collection' => new ObjectType('Illuminate\Support\Collection'),
             'date', 'datetime' => $this->getDateType(),
             'immutable_date', 'immutable_datetime' => new ObjectType('Carbon\CarbonImmutable'),
-            'Illuminate\Database\Eloquent\Casts\AsArrayObject', 'Illuminate\Database\Eloquent\Casts\AsCollection' => new MixedType(),
+            'Illuminate\Database\Eloquent\Casts\AsArrayObject', 'Illuminate\Database\Eloquent\Casts\AsCollection',
+            'Illuminate\Database\Eloquent\Casts\AsEncryptedArrayObject', 'Illuminate\Database\Eloquent\Casts\AsEncryptedCollection' => new MixedType(),
+            'Illuminate\Database\Eloquent\Casts\AsStringable' => TypeCombinator::union(new StringType(), new ObjectType('Stringable')),
             default => null,
         };
 
@@ -110,6 +117,10 @@ class ModelCastHelper
         }
 
         $classReflection = $this->reflectionProvider->getClass($cast);
+
+        if ($classReflection->isEnum()) {
+            return new ObjectType($cast);
+        }
 
         if ($classReflection->isSubclassOf(Castable::class)) {
             $methodReflection = $classReflection->getNativeMethod('castUsing');
@@ -150,9 +161,9 @@ class ModelCastHelper
 
     /**
      * @param  string  $cast
-     * @return string|null
+     * @return string
      */
-    private function parseCast(string $cast): ?string
+    private function parseCast(string $cast): string
     {
         foreach (explode(':', $cast) as $part) {
             // If the cast is prefixed with `encrypted:` we need to skip to the next
@@ -163,6 +174,6 @@ class ModelCastHelper
             return $part;
         }
 
-        return null;
+        return $cast;
     }
 }
