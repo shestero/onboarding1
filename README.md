@@ -1,4 +1,4 @@
-# Wiregate website backend (On-Boarding task #1)
+# Wiregate website back-end (On-Boarding task #1)
 
 ## Preparing
 

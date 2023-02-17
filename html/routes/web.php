@@ -41,14 +41,13 @@ class Users_view extends Eloquent {
 
 Route::get('about', function()
 {
-    return 'About page!';
+    return view('about');
 })->name('about');
 
 Route::get('users', function()
 {
     $users = Users_view::all();
     return View::make('users')->with('users', $users);
-    //return View::make('users');        
 })->middleware(['auth', 'verified'])->name('users');;
 
 Route::get('user/{id}', function($id) 
@@ -64,24 +63,17 @@ Route::middleware(['auth', 'verified'])->get('user', function()
     return View::make('user')->with('id', $id)->with('user', $user);
 })->name('user');
 
-Route::get('avatar/{id}', function($id)
-{
-    // TODO: check id is a valid user id
-    $image = Storage::disk('s3')->get($id); // Storage::get($id);
-    if (!$image)
-        return "Error with <b>$id</b>";
-        
-    $mimetype = Storage::mimeType($image); // 'image/jpeg';
-    return response($image)->withHeaders([
-        'Content-Type' => $mimetype
-      ]);
-})->where('id', '[0-9]+');
-
 Route::get('promote/{userid}', function($userid)
 {
-    $res = DB::table('users')
-        ->where('id', $userid)
-        ->update(['group_id' => 1]);
+    $res = DB::table('users')->where('id', $userid)->update(['group_id' => 1]);
+
+    return var_export($res, true);
+
+})->where('userid', '[0-9]+')->middleware('admin');
+
+Route::get('user.delete/{userid}', function($userid) 
+{
+    $res = DB::table('users')->where('id', $userid)->delete();
 
     return var_export($res, true);
 
