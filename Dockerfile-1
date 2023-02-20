@@ -41,9 +41,9 @@ RUN composer global require friendsofphp/php-cs-fixer
 # Error: Class "ECSPrefix202302\Symfony\Component\Console\Command\Command" not found
 
 # Node.Js
-RUN curl -sL https://deb.nodesource.com/setup_14.x | sudo bash -
-RUN sudo apt -y install nodejs yarn    
-RUN npm install
+#RUN curl -sL https://deb.nodesource.com/setup_14.x | sudo bash -
+#RUN sudo apt -y install nodejs yarn    
+#RUN npm install
 # npm run dev
 # see: https://stackoverflow.com/questions/73631193/how-to-expose-vite-js-host-to-the-outside-docker/73697215#73697215
 
