@@ -1,17 +1,15 @@
-version: '2'
+version: '3.4'
 services:
   app:    
     build:
-      args:
-        user: sammy
-        uid: 1000
       context: ./
+      target: "${TARGET:-base}"
       dockerfile: Dockerfile    
     ports:
       - "3000:3000"
       - "8080:80"
-      - '9003:9003'
-      - "10000:10000"
+#      - '9003:9003'
+#      - "10000:10000"
     volumes:
       - ./html:/var/www/html
     environment:
@@ -50,6 +48,7 @@ services:
     image: maildev/maildev:2.0.5
     ports:
       - "8025:1080"
+
   minio:
     image: minio/minio:RELEASE.2023-02-10T18-48-39Z
     command: server /data --console-address ":9001"
@@ -66,18 +65,20 @@ services:
       interval: 30s
       timeout: 20s
       retries: 3
-  mc: # for cheking and test only
-    image: minio/mc
-    depends_on:
-      minio:
-        condition: service_healthy
-    restart: on-failure
-    entrypoint: >
-      /bin/sh -c "
-      /usr/bin/mc alias set myminio http://minio:9000 minio minio123;
-      /usr/bin/mc mb myminio/mybucket;
-      /usr/bin/mc anonymous set public myminio/mybucket;
-      "
+
+#  mc: # for cheking and test only
+#    image: minio/mc
+#    depends_on:
+#      minio:
+#        condition: service_healthy
+#    restart: on-failure
+#    entrypoint: >
+#      /bin/sh -c "
+#      /usr/bin/mc alias set myminio http://minio:9000 minio minio123;
+#      /usr/bin/mc mb myminio/mybucket;
+#      /usr/bin/mc anonymous set public myminio/mybucket;
+#      "
+
   db:
     image: mariadb/server:10.5        
     ports:
@@ -90,11 +91,13 @@ services:
       - MARIADB_DATABASE=laravel
       - MARIADB_USER=laravel
       - MARIADB_PASSWORD=laravel
+
   redis:
     image: redis:7.0.8-bullseye
     ports:
       - '6379:6379'
-    command: redis-server --save 20 1 --loglevel warning    
+    command: redis-server --save 20 1 --loglevel warning 
+
   node:
     image: node:lts-alpine # lts-alpine3.17
     ports:

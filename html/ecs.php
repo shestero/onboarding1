@@ -30,8 +30,8 @@ use Symplify\EasyCodingStandard\ValueObject\Set\SetList;
 
 return static function (ECSConfig $ecsConfig): void {
     $ecsConfig->paths([
-        __DIR__ . '/src',
-        __DIR__ . '/tests',
+        __DIR__.'/src',
+        __DIR__.'/tests',
     ]);
 
     $ecsConfig->sets([SetList::PSR_12, SetList::CLEAN_CODE, SetList::COMMON]);
@@ -85,22 +85,21 @@ return static function (ECSConfig $ecsConfig): void {
             // https://github.com/nunomaduro/phpinsights/blob/master/docs/insights/style.md#no-extra-blank-lines---
             NoExtraBlankLinesFixer::class,
             [
-                'tokens' =>
-                 [
-                     'break',
-                     'case',
-                     'continue',
-                     'curly_brace_block',
-                     'default',
-                     'extra',
-                     'parenthesis_brace_block',
-                     'return',
-                     'square_brace_block',
-                     'switch',
-                     'throw',
-                     //'use',
-                     'use_trait',
-                 ],
+                'tokens' => [
+                    'break',
+                    'case',
+                    'continue',
+                    'curly_brace_block',
+                    'default',
+                    'extra',
+                    'parenthesis_brace_block',
+                    'return',
+                    'square_brace_block',
+                    'switch',
+                    'throw',
+                    //'use',
+                    'use_trait',
+                ],
             ],
         ],
     ];

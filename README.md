@@ -5,16 +5,29 @@
 ## Development
 
 ### Run for local development
+To build run in /var/www/html directory:
 ```
-docker-compose up --build
+TARGET=dev docker-compose build --no-cache
 ```
+and then to run:
+```
+TARGET=dev docker-compose up --build
+```
+This build has enabled XDebug feature 
+which will try to connect to host debugger at port 10000
+(IDE key setting is **PHPSTORM**).
 
 ### Production image
+To build run in /var/www/html directory:
+```
+TARGET=prod docker-compose build --no-cache
+```
+and then to run:
 ```
 TARGET=prod docker-compose up --build
 ```
 
-### Database inititalization (migration)
+### Database initialization (migration)
 
 Connect to app container
 ```
@@ -36,6 +49,17 @@ Connect to app container
 ```
 docker exec -it onboarding1-app-1 bash
 ```
+
+#### Using Pint
+
+From the default directory /var/www/html run:
+```
+./vendor/bin/pint
+```
+See also: https://laravel.com/docs/10.x/pint
+
+#### Using php-cs-fixer
+
 From the default directory /var/www/html run:
  to check code style:
 ```

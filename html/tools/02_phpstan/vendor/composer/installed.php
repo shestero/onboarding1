@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'systemsdk/docker-apache-php-laravel-tools',
-        'pretty_version' => 'dev-main',
-        'version' => 'dev-main',
-        'reference' => '4add6c72c05555b58eaf4e0ca572a2b9674c181a',
+        'pretty_version' => '1.0.0+no-version-set',
+        'version' => '1.0.0.0',
+        'reference' => NULL,
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -320,9 +320,9 @@
             'dev_requirement' => true,
         ),
         'league/flysystem' => array(
-            'pretty_version' => '3.12.2',
-            'version' => '3.12.2.0',
-            'reference' => 'f6377c709d2275ed6feaf63e44be7a7162b0e77f',
+            'pretty_version' => '3.12.3',
+            'version' => '3.12.3.0',
+            'reference' => '81e87e74dd5213795c7846d65089712d2dda90ce',
             'type' => 'library',
             'install_path' => __DIR__ . '/../league/flysystem',
             'aliases' => array(),
@@ -512,7 +512,7 @@
         'roave/security-advisories' => array(
             'pretty_version' => 'dev-latest',
             'version' => 'dev-latest',
-            'reference' => 'df155ba3057743b818f94889528787f145992478',
+            'reference' => '9206ad5e9490993f471ef1503f630afd7a849170',
             'type' => 'metapackage',
             'install_path' => NULL,
             'aliases' => array(
@@ -776,9 +776,9 @@
             'dev_requirement' => true,
         ),
         'systemsdk/docker-apache-php-laravel-tools' => array(
-            'pretty_version' => 'dev-main',
-            'version' => 'dev-main',
-            'reference' => '4add6c72c05555b58eaf4e0ca572a2b9674c181a',
+            'pretty_version' => '1.0.0+no-version-set',
+            'version' => '1.0.0.0',
+            'reference' => NULL,
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

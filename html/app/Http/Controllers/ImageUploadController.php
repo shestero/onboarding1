@@ -56,7 +56,7 @@ class ImageUploadController extends Controller
 
         DB::table('users')
                 ->where('id', $userid)
-                ->update(['avatar' =>$imageName]);
+                ->update(['avatar' => $imageName]);
 
         return back()
             ->with('success', "You have successfully upload image $imageName.  $path ")

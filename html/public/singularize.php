@@ -6,16 +6,15 @@
 * Usage example:
 * {singularize "people"} # person
 */
-function singularize ($params)
+function singularize($params)
 {
-    if (is_string($params))
-    {
+    if (is_string($params)) {
         $word = $params;
-    } else if (!$word = $params['word']) {
+    } elseif (! $word = $params['word']) {
         return false;
     }
 
-    $singular = array (
+    $singular = [
         '/(quiz)zes$/i' => '\\1',
         '/(matr)ices$/i' => '\\1ix',
         '/(vert|ind)ices$/i' => '\\1ex',
@@ -39,18 +38,18 @@ function singularize ($params)
         '/((a)naly|(b)a|(d)iagno|(p)arenthe|(p)rogno|(s)ynop|(t)he)ses$/i' => '\\1\\2sis',
         '/([ti])a$/i' => '\\1um',
         '/(n)ews$/i' => '\\1ews',
-        '/s$/i' => ''
-    );
+        '/s$/i' => '',
+    ];
 
-    $irregular = array(
+    $irregular = [
         'person' => 'people',
         'man' => 'men',
         'child' => 'children',
         'sex' => 'sexes',
-        'move' => 'moves'
-    );	
+        'move' => 'moves',
+    ];
 
-    $ignore = array(
+    $ignore = [
         'equipment',
         'information',
         'rice',
@@ -61,33 +60,26 @@ function singularize ($params)
         'sheep',
         'press',
         'sms',
-    );
+    ];
 
     $lower_word = strtolower($word);
-    foreach ($ignore as $ignore_word)
-    {
-        if (substr($lower_word, (-1 * strlen($ignore_word))) == $ignore_word)
-        {
+    foreach ($ignore as $ignore_word) {
+        if (substr($lower_word, (-1 * strlen($ignore_word))) == $ignore_word) {
             return $word;
         }
     }
 
-    foreach ($irregular as $singular_word => $plural_word)
-    {
-        if (preg_match('/('.$plural_word.')$/i', $word, $arr))
-        {
-            return preg_replace('/('.$plural_word.')$/i', substr($arr[0],0,1).substr($singular_word,1), $word);
+    foreach ($irregular as $singular_word => $plural_word) {
+        if (preg_match('/('.$plural_word.')$/i', $word, $arr)) {
+            return preg_replace('/('.$plural_word.')$/i', substr($arr[0], 0, 1).substr($singular_word, 1), $word);
         }
     }
 
-    foreach ($singular as $rule => $replacement)
-    {
-        if (preg_match($rule, $word))
-        {
+    foreach ($singular as $rule => $replacement) {
+        if (preg_match($rule, $word)) {
             return preg_replace($rule, $replacement, $word);
         }
     }
 
     return $word;
 }
-?>

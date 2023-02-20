@@ -15,6 +15,6 @@ return static function (Configuration $config): Configuration {
         ->addNamedFilter(NamedFilter::fromString('jaybizzle/laravel-migrations-organiser'))
         ->setAdditionalFilesFor('icanhazstring/composer-unused', [
             __FILE__,
-            ...Glob::glob(__DIR__ . '/config/*.php'),
+            ...Glob::glob(__DIR__.'/config/*.php'),
         ]);
 };
