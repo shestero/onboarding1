@@ -1,10 +1,10 @@
 version: '3.4'
 services:
-  app:    
+  app:
     build:
       context: ./
       target: "${TARGET:-base}"
-      dockerfile: Dockerfile    
+      dockerfile: Dockerfile
     ports:
       - "3000:3000"
       - "8080:80"
@@ -66,21 +66,21 @@ services:
       timeout: 20s
       retries: 3
 
-#  mc: # for cheking and test only
-#    image: minio/mc
-#    depends_on:
-#      minio:
-#        condition: service_healthy
-#    restart: on-failure
-#    entrypoint: >
-#      /bin/sh -c "
-#      /usr/bin/mc alias set myminio http://minio:9000 minio minio123;
-#      /usr/bin/mc mb myminio/mybucket;
-#      /usr/bin/mc anonymous set public myminio/mybucket;
-#      "
+  mc: # for cheking and test only
+    image: minio/mc
+    depends_on:
+      minio:
+        condition: service_healthy
+    restart: on-failure
+    entrypoint: >
+      /bin/sh -c "
+      /usr/bin/mc alias set myminio http://minio:9000 minio minio123;
+      /usr/bin/mc mb myminio/mybucket;
+      /usr/bin/mc anonymous set public myminio/mybucket;
+      "
 
   db:
-    image: mariadb/server:10.5        
+    image: mariadb/server:10.5
     ports:
       - '3306:3306'
     environment:
