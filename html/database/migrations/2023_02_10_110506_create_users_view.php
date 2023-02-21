@@ -35,6 +35,7 @@ return new class extends Migration
             CREATE VIEW users_view AS
                 SELECT 
                     users.*,
+                    trim(concat(first_name,' ',last_name)) as name,
                     group_name
                 FROM users
                 LEFT JOIN groups ON users.group_id=groups.id

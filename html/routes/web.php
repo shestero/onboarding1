@@ -32,15 +32,6 @@ Route::middleware('auth')->group(function () {
 
 use Illuminate\Support\Facades\Storage;
 
-/*
-class Users_view extends Eloquent {
-    function __construct()
-    {
-        $this->setTable('users_view');
-    }
-}
-*/
-
 Route::get('about', function () {
     return view('about');
 })->name('about');

@@ -21,8 +21,12 @@ require_once 'singularize.php'
                         @endforeach
                         </table>
                     </div>
-                    <div style="display: inline-block; vertical-align: top;">
-                        <img src="{{ env('AWS_EXTERNAL_URL') }}/avatars/{{ $user->avatar }}" alt="avater" onerror="this.src='/Default_pfp.svg';this.onerror='';"/>
+                    <div style="display: inline-block; vertical-align: top;">{{ config('app.aws_url') }}
+                        @if ($user->avatar>'')
+                            <img src="{{ Storage::disk('s3')->url('/avatars/'.$user->avatar) }}" alt="avater" onerror="this.src='/Default_pfp.svg';this.onerror='';"/>
+                        @else
+                            <div>No avatar</div>
+                        @endif
                         <p align="center"><a href="{{ url('avatar-upload') }}?userid={{ $id }}">Upload/change this avatar</a></p>
                     </div>
                     <hr/>

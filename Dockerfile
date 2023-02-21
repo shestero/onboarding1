@@ -82,9 +82,8 @@ RUN echo 'xdebug.profile_enable=0'  >> /usr/local/etc/php/conf.d/xdebug.ini
 #RUN DB_HOST=db php artisan migrate
 
 # Clear cache
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+#RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Copy files
-COPY --from=base /var/www/html /var/www/html-prod
-WORKDIR /var/www/html-prod
+COPY html /var/www/html
 

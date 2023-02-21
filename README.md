@@ -7,11 +7,11 @@
 ### Run for local development
 To build run in /var/www/html directory:
 ```
-TARGET=dev docker-compose build --no-cache
+docker-compose build --no-cache
 ```
 and then to run:
 ```
-TARGET=dev docker-compose up --build
+docker-compose up --build
 ```
 This build has enabled XDebug feature 
 which will try to connect to host debugger at port 10000

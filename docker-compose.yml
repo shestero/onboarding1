@@ -11,32 +11,36 @@ services:
 #      - '9003:9003'
 #      - "10000:10000"
     volumes:
-      - ./html:/var/www/html
-    environment:
-      - AWS_ACCESS_KEY_ID=minio
-      - AWS_SECRET_ACCESS_KEY=minio123
-      - AWS_DEFAULT_REGION=eu-west-1
-      - AWS_BUCKET=avatars
-      - AWS_EXTERNAL_URL=http://localhost:9000
-      - AWS_URL=http://minio:9000
-      - AWS_ENDPOINT=http://minio:9000
-      - AWS_USE_PATH_STYLE_ENDPOINT=true
-      - MINIO_VOLUMES=/minio-data
-      - MINIO_ACCESS_KEY=minio
-      - MINIO_SECRET_KEY=minio123
-      - MINIO_SERVER_ACCESS_KEY=minio
-      - MINIO_SERVER_SECRET_KEY=minio123
-      - MINIO_ROOT_USER=minio
-      - MINIO_ROOT_PASSWORD=minio123
-      - REDIS_URL=redis://redis:6379
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
-      - REDIS_USERNAME=
-      - REDIS_PASSWORD=
-      - REDIS_DB=0
-      - REDIS_SESSION_DB=1
-      - SESSION_DRIVER=redis
-      - SESSION_CONNECTION=session
+      - "./html:/var/www/${TARGET:-html}"
+    env_file: 
+      - ./html/.env
+      
+    # environment:
+    #   - AWS_ACCESS_KEY_ID=minio
+    #   - AWS_SECRET_ACCESS_KEY=minio123
+    #   - AWS_DEFAULT_REGION=eu-west-1
+    #   - AWS_BUCKET=avatars
+    #   - AWS_EXTERNAL_URL=http://localhost:9000
+    #   - AWS_URL=http://minio:9000
+    #   - AWS_ENDPOINT=http://minio:9000
+    #   - AWS_USE_PATH_STYLE_ENDPOINT=true
+    #   - MINIO_VOLUMES=/minio-data
+    #   - MINIO_ACCESS_KEY=minio
+    #   - MINIO_SECRET_KEY=minio123
+    #   - MINIO_SERVER_ACCESS_KEY=minio
+    #   - MINIO_SERVER_SECRET_KEY=minio123
+    #   - MINIO_ROOT_USER=minio
+    #   - MINIO_ROOT_PASSWORD=minio123
+    #   - REDIS_URL=redis://redis:6379
+    #   - REDIS_HOST=redis
+    #   - REDIS_PORT=6379
+    #   - REDIS_USERNAME=
+    #   - REDIS_PASSWORD=
+    #   - REDIS_DB=0
+    #   - REDIS_SESSION_DB=1
+    #   - SESSION_DRIVER=redis
+    #   - SESSION_CONNECTION=session
+
     depends_on:
       - node
       - minio
@@ -91,6 +95,8 @@ services:
       - MARIADB_DATABASE=laravel
       - MARIADB_USER=laravel
       - MARIADB_PASSWORD=laravel
+    volumes:
+      - "dbdata:/var/lib/mysql"
 
   redis:
     image: redis:7.0.8-bullseye
@@ -108,3 +114,5 @@ services:
     working_dir: /html
     command: sh -c "npm install && npm run dev"
   
+volumes:
+  dbdata:

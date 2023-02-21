@@ -15,7 +15,8 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id()->autoIncrement();
-            $table->string('name');
+            $table->string('first_name');
+            $table->string('last_name')->default('');
             $table->integer('group_id')->default(2);
             $table->string('avatar')->nullable();
             $table->string('email')->unique();
@@ -27,7 +28,7 @@ return new class extends Migration
 
         DB::table('users')->insert(
             [
-                'name' => 'root',
+                'first_name' => 'root',
                 'password' => '$2y$10$x4ttMR3sdKEWyyaTomSLGuugKWIA1ex/Lf9GGQdcAXkG11F7zjc3m', // has of 'qwertyuiop123' (bcrypt)
                 'group_id' => 1,
                 'avatar' => 'agent-k-512.png',
@@ -37,14 +38,15 @@ return new class extends Migration
         );
         DB::table('users')->insert(
             [
-                'name' => 'Ivan Ivanović',
+                'first_name' => 'Ivan',
+                'last_name' => 'Ivanović',
                 'password' => '$2y$10$x4ttMR3sdKEWyyaTomSLGuugKWIA1ex/Lf9GGQdcAXkG11F7zjc3m', // has of 'qwertyuiop123'
                 'email' => 'ivanovich@domain.example',
             ]
         );
         DB::table('users')->insert(
             [
-                'name' => 'test',
+                'first_name' => 'test',
                 'password' => '$2y$10$/MgsbhFl1NnWQdMURYFZYegeDrq6cyByuzIVoEPcqKXpBzYANPv36', // hash of '123'
                 'email' => 'user@domain.example',
             ]
